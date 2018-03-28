@@ -66,10 +66,10 @@ RUN mix phx.digest
 
 # Release
 WORKDIR $HOME
-RUN mix release.clean
-ENV MIX_ENV="prod mix compile"
+# RUN mix release.clean
+# ENV MIX_ENV="prod mix compile"
 # ENV MIX_ENV="prod mix release"
-# RUN mix release --env=$MIX_ENV --verbose
+RUN mix release --env=$MIX_ENV --verbose
 
 ########################################################################
 FROM alpine:3.6
@@ -78,7 +78,7 @@ ENV LANG=en_US.UTF-8 \
     HOME=/opt/app/ \
     TERM=xterm
 
-ENV MYPROJECT_VERSION=0.1.0
+ENV MYPROJECT_VERSION=0.0.1
 
 RUN apk --update upgrade && apk add --no-cache ncurses-libs openssl
 
