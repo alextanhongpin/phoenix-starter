@@ -16,10 +16,13 @@ services:
     # build: .
     image: alextanhongpin/phoenix
     environment:
-      - DB_USER=postgres
-      - DB_PASS=postgres
-      - DB_NAME=phoenix_starter_prod
-      - DB_HOST=db
-      - PORT=8080
+      # - DB_USER=postgres
+      # - DB_PASS=postgres
+      # - DB_NAME=phoenix_starter_prod
+      # - DB_HOST=db
+      - PORT=4000
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/phoenix_starter_prod
+    links:
+      - db
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:4000:4000

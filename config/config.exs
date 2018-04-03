@@ -11,7 +11,7 @@ config :phoenix_starter,
 
 # Configures the endpoint
 config :phoenix_starter, PhoenixStarterWeb.Endpoint,
-  url: [host: "0.0.0.0"],
+  url: [host: "0.0.0.0", port: System.get_env("PORT")],
   secret_key_base: "mjtBAH3yWHV8FTx3n5IHCEYsb8vBkRgmhld6UG7RHU4hV8Y9Ml92c4yyXSMgJ03k",
   render_errors: [view: PhoenixStarterWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: PhoenixStarter.PubSub,
