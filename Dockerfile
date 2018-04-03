@@ -47,10 +47,7 @@ COPY mix.exs mix.lock $HOME/
 COPY mix.exs $HOME/apps/phoenix_starter/
 COPY config/ $HOME/apps/phoenix_starter/config/
 
-# COPY apps/phoenix_starter/mix.exs $HOME/apps/phoenix_starter/
-# COPY apps/phoenix_starter/config/ $HOME/apps/phoenix_starter/config/
-
-ENV MIX_ENV=prod
+ENV MIX_ENV=dev
 RUN mix deps.update --all
 RUN mix do deps.get --only $MIX_ENV, deps.compile
 
@@ -60,7 +57,7 @@ COPY . $HOME/
 COPY --from=asset-builder $HOME/apps/phoenix_starter/priv/static/ $HOME/apps/phoenix_starter/priv/static/
 
 WORKDIR $HOME/apps/phoenix_starter
-ENV MIX_ENV=prod
+ENV MIX_ENV=dev
 RUN mix deps.update --all
 RUN mix phx.digest
 
@@ -81,7 +78,7 @@ RUN apk --update upgrade && apk add --no-cache ncurses-libs openssl bash
 
 EXPOSE 4000
 ENV PORT=4000 \
-    MIX_ENV=prod \
+    MIX_ENV=dev \
     REPLACE_OS_VARS=true \
     SHELL=/bin/sh
 

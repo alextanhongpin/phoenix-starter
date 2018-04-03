@@ -18,7 +18,9 @@ services:
     environment:
       - DB_USER=postgres
       - DB_PASS=postgres
-      - DB_NAME=phoenix_starter_prod
-      - DB_HOST=127.0.0.1
+      - DB_NAME=phoenix_starter_dev
+      - DB_HOST=db
+    links:
+      - db
     ports:
       - 127.0.0.1:4000:4000
