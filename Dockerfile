@@ -13,7 +13,7 @@ WORKDIR $HOME/apps/phoenix_starter
 RUN mix deps.get
 
 ########################################################################
-FROM node:6 as asset-builder
+FROM node:9.10.1 as asset-builder
 
 ENV HOME=/opt/app
 WORKDIR $HOME
@@ -26,7 +26,7 @@ RUN yarn install
 RUN ./node_modules/.bin/brunch build --production
 
 ########################################################################
-FROM bitwalker/alpine-elixir:1.4.5 as releaser
+FROM bitwalker/alpine-elixir:1.6.4 as releaser
 
 ENV HOME=/opt/app
 
@@ -66,10 +66,7 @@ RUN mix phx.digest
 
 # Release
 WORKDIR $HOME
-# RUN mix release.clean
-# ENV MIX_ENV="prod mix compile"
-# ENV MIX_ENV="prod mix release"
-RUN mix release --env=$MIX_ENV --verbose
+RUN mix release 
 
 ########################################################################
 FROM alpine:3.6
@@ -80,7 +77,7 @@ ENV LANG=en_US.UTF-8 \
 
 ENV MYPROJECT_VERSION=0.0.1
 
-RUN apk --update upgrade && apk add --no-cache ncurses-libs openssl
+RUN apk --update upgrade && apk add --no-cache ncurses-libs openssl bash
 
 EXPOSE 4000
 ENV PORT=4000 \
@@ -94,3 +91,24 @@ RUN tar -xzf phoenix_starter.tar.gz
 
 ENTRYPOINT ["/opt/app/bin/phoenix_starter"]
 CMD ["foreground"]
+
+
+## ERROR: /app/erts-9.2/bin/erlexec: 1: /app/erts-9.2/bin/erlexec: Syntax error: "(" unexpected
+## Error will be thrown if you are trying to run the compiled version from macos on linux.
+## Currently cross-compilation does not work
+
+# FROM ubuntu
+# RUN apt-get update && \
+#     apt-get install -y libssl1.0.0 && \
+#     apt-get autoclean
+# RUN mkdir -p /app
+# ARG VERSION=0.0.1
+# COPY _build/prod/rel/phoenix_starter/releases/${VERSION}/phoenix_starter.tar.gz /app/phoenix_starter.tar.gz
+# WORKDIR /app
+# RUN tar xvzf phoenix_starter.tar.gz
+# # RUN locale-gen en_US.UTF-8
+# # ENV LANG en_US.UTF-8
+# # ENV LANGUAGE en_US.UTF-8
+# # ENV LC_ALL en_US.UTF-8
+# ENV PORT 8888
+# CMD ["/app/bin/phoenix_starter", "foreground"]
