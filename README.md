@@ -19,9 +19,22 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
 
+## Start Postgres
+
+```bash
+$ docker-compose up -d
+```
 
 ## Install Distillery
 
+Create production release:
+
 ```bash
-$ mix release.init
+$ MIX_ENV=prod mix release
+```
+
+Run:
+
+```bash
+$ PORT=4000 _build/prod/rel/phoenix_starter/bin/phoenix_starter foreground
 ```
