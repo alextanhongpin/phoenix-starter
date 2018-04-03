@@ -15,8 +15,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :phoenix_starter, PhoenixStarterWeb.Endpoint,
   # load_from_system_env: true,
-  # http: [port: {:system, "PORT"}],
-  http: [port: 4000],
+  http: [port: {:system, "PORT"}], # Is basically defp to_port({:system, env_var}), do: to_port(System.get_env(env_var))
+  # http: [port: 4000],
   url: [host: "example.com", port: 80],
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
